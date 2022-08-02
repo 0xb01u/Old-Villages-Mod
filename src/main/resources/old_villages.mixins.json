@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.fabricmc.bolu.old_villages.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ServerWorldMixin",
     "VillagerEntityMixin"
