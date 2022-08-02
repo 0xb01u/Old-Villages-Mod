@@ -21,7 +21,7 @@ public class RenderUtils {
 			GlStateManager.disableCull();
 			GlStateManager.enableDepthTest();
 		} else {
-            GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+			GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 			GlStateManager.enableCull();
 			GlStateManager.enableTexture();
 		}
