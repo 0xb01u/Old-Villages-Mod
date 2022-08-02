@@ -21,18 +21,19 @@ public class RenderUtils {
 			GlStateManager.disableCull();
 			GlStateManager.enableDepthTest();
 		} else {
-			GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 			GlStateManager.enableCull();
 			GlStateManager.enableTexture();
 		}
 	}
 
 	private static void drawDot(double Ax, double Ay, double Az, Color color) {
-        GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+		final int RED = color.getRed();
+		final int GREEN = color.getGreen();
+		final int BLUE = color.getBlue();
 
-		final int RED = color.getRed(), GREEN = color.getGreen(), BLUE = color.getBlue();
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
+
 		bufferBuilder.begin(GL11.GL_POINT, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(Ax, Ay, Az).color(RED, GREEN, BLUE, 255).next();
 		tessellator.draw();
@@ -42,11 +43,13 @@ public class RenderUtils {
 	                            double Ax, double Ay, double Az,
 	                            double Bx, double By, double Bz,
 	                            Color color) {
-		GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+		final int RED = color.getRed();
+		final int GREEN = color.getGreen();
+		final int BLUE = color.getBlue();
 
-		final int RED = color.getRed(), GREEN = color.getGreen(), BLUE = color.getBlue();
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
+
 		bufferBuilder.begin(GL11.GL_LINES, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(Ax - dx, Ay - dy, Az - dz).color(RED, GREEN, BLUE, 255).next();
 		bufferBuilder.vertex(Bx - dx, By - dy, Bz - dz).color(RED, GREEN, BLUE, 255).next();
@@ -106,20 +109,5 @@ public class RenderUtils {
 
 	public static void drawBox(double dx, double dy, double dz, double x1, double y1, double z1,
 	                           double x2, double y2, double z2, Color color) {
-		if (true) return;
-        GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-
-
-		
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		bufferBuilder.begin(GL11.GL_LINES, VertexFormats.POSITION_COLOR);
-
-		float C = color.getRed();
-		float M = color.getGreen();
-		float Y = color.getBlue();
-
-		WorldRenderer.drawBox(bufferBuilder, x1 - dx, y1 - dy, z1 - dz, x2 - dx, y2- dy, z2 - dz,
-				C / 255, M / 255, Y / 255, 1F);
 	}
 }
