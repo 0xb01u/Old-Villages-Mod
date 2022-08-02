@@ -8,17 +8,16 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.Spawner;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.storage.LevelStorage;
+import net.minecraft.world.spawner.Spawner;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
@@ -32,17 +31,17 @@ public abstract class ServerWorldMixin {
 	public void addOldVillages(
 			MinecraftServer server, Executor workerExecutor,
 			LevelStorage.Session session, ServerWorldProperties properties,
-			RegistryKey<World> worldKey, DimensionType dimensionType,
+			RegistryKey<World> worldKey, DimensionOptions dimensionOptions,
 			WorldGenerationProgressListener worldGenerationProgressListener,
-			ChunkGenerator chunkGenerator, boolean debugWorld,
-			long seed, List<Spawner> spawners, boolean shouldTickTime,
-			CallbackInfo ci) {
-		if (THIS.getDimension().isBedWorking()) {
+			boolean debugWorld, long seed, List<Spawner> spawners,
+			boolean shouldTickTime, CallbackInfo ci) {
+		if (THIS.getDimension().bedWorks()) {
 			return;
 		}
 
 		PersistentStateManager persistentStateManager = THIS.getPersistentStateManager();
-		VillageCollection.villages = persistentStateManager.getOrCreate(VillageCollection::new, "old_villages");
+		VillageCollection.villages = persistentStateManager.getOrCreate(
+				VillageCollection::fromNbt, VillageCollection::new, VillageCollection.name());
 
 		System.out.println("[Old Villages Mod] Loaded villages data.");
 	}

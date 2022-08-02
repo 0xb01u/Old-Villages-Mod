@@ -22,7 +22,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 	public void detectDoords(CallbackInfo ci) {
 		if (--this.randomTickDivider <= 0) {
 			BlockPos pos = this.getBlockPos();
-			VillageCollection.villages.addToVillagerPositionList(pos, (ServerWorld) this.getMerchantWorld());
+			VillageCollection.villages.addToVillagerPositionList(pos, (ServerWorld) this.getEntityWorld());
 			this.randomTickDivider = 70 + this.random.nextInt(50);
 		}
 	}

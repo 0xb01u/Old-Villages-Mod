@@ -71,14 +71,6 @@ Aside from that, some bugs have been noticed:
  - When reconstructing villages after reloading a world, some doors might be undetected until broken and placed again, or doors from the same village create multiple different villages. This also should never happen in the current version of the game, but be aware in case it does.
  - Concerning the Village Marker, the height (y coordinate) of the vertex of the door lines is not properly computed. It's not a big deal but it is noticeable.
 
-## Why 1.16.5?
-
-I am aware that the latest Minecraft version at the time of first releasing this mod is 1.19.1.
-However, I am currently uninterested in playing Minecraft versions newer to The Nether Update, as I don't find them
-engaging or fun enough. I will probably update the mod to 1.19 (not 1.19.1, nobody should play that version,
-thank you, Microsoft) as I plan on playing it with a friend. But I will not make a version for 1.17-1.18 or above
-1.19, as I don't want to put effort into something I am not going to enjoy whatsoever.
-
 ## Old iron farms compatibility list
 
 Currently, the results of trying to rebuild old iron farms seem to be inconsistent. Sometimes full resets

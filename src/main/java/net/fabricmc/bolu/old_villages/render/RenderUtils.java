@@ -1,10 +1,8 @@
 package net.fabricmc.bolu.old_villages.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.WorldRenderer;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.render.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.Color;
@@ -14,40 +12,43 @@ public class RenderUtils {
 
 	public static void prepareOpenGL(boolean beforeRender) {
 		if (beforeRender) {
-			GlStateManager.enableBlend();
-			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GlStateManager.lineWidth(2f);
-			GlStateManager.disableTexture();
-			GlStateManager.disableCull();
-			GlStateManager.enableDepthTest();
+			GlStateManager._enableBlend();
+			GlStateManager._blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			RenderSystem.assertOnRenderThread();
+			RenderSystem.lineWidth(2f);
+			GlStateManager._disableTexture();
+			GlStateManager._disableCull();
+			GlStateManager._enableDepthTest();
 		} else {
-            GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-			GlStateManager.enableCull();
-			GlStateManager.enableTexture();
+			GlStateManager._polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+			GlStateManager._enableCull();
+			GlStateManager._enableTexture();
 		}
 	}
 
 	private static void drawDot(double Ax, double Ay, double Az, Color color) {
-        GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-
 		final int RED = color.getRed(), GREEN = color.getGreen(), BLUE = color.getBlue();
+
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		bufferBuilder.begin(GL11.GL_POINT, VertexFormats.POSITION_COLOR);
+
+		GlStateManager._polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+		bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(Ax, Ay, Az).color(RED, GREEN, BLUE, 255).next();
-		tessellator.draw();
+		BufferRenderer.drawWithShader(bufferBuilder.end());
 	}
 
 	public static void drawLine(double dx, double dy, double dz,
 	                            double Ax, double Ay, double Az,
 	                            double Bx, double By, double Bz,
 	                            Color color) {
-		GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-
 		final int RED = color.getRed(), GREEN = color.getGreen(), BLUE = color.getBlue();
+
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		bufferBuilder.begin(GL11.GL_LINES, VertexFormats.POSITION_COLOR);
+
+		GlStateManager._polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+		bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(Ax - dx, Ay - dy, Az - dz).color(RED, GREEN, BLUE, 255).next();
 		bufferBuilder.vertex(Bx - dx, By - dy, Bz - dz).color(RED, GREEN, BLUE, 255).next();
 		tessellator.draw();
@@ -107,13 +108,11 @@ public class RenderUtils {
 	public static void drawBox(double dx, double dy, double dz, double x1, double y1, double z1,
 	                           double x2, double y2, double z2, Color color) {
 		if (true) return;
-        GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 
 
-		
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		bufferBuilder.begin(GL11.GL_LINES, VertexFormats.POSITION_COLOR);
+
+		BufferBuilder bufferBuilder = new BufferBuilder(2097152);
+		bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
 
 		float C = color.getRed();
 		float M = color.getGreen();

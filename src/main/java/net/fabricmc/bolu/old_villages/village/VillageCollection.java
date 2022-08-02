@@ -15,6 +15,7 @@ import java.util.List;
 
 public class VillageCollection extends PersistentState {
 	public static VillageCollection villages = null;
+    private static final String OLD_VILLAGES = "old_villages";
 
 	private ServerWorld world;
 
@@ -23,9 +24,7 @@ public class VillageCollection extends PersistentState {
 	private final List<Village> villageList = Lists.newArrayList();
 	private int tickCounter = 0;
 
-	public VillageCollection() {
-		super("old_villages");
-	}
+	public VillageCollection() {}
 
 	public void addToVillagerPositionList(BlockPos pos, ServerWorld worldIn) {
 		VillagerWorldInfo villager = new VillagerWorldInfo(pos, worldIn);
@@ -39,7 +38,7 @@ public class VillageCollection extends PersistentState {
 	 */
 	public void tick(ServerWorld worldIn) {
 		this.world = worldIn;
-		if (this.world.getDimension().isBedWorking()) {
+		if (this.world.getDimension().bedWorks()) {
 			++this.tickCounter;
 		}
 
@@ -88,7 +87,7 @@ public class VillageCollection extends PersistentState {
 
 			BlockPos doorPos = door.getDoorBlockPos();
 			double d = curVillage.getCenter()
-					.getSquaredDistance(doorPos.getX(), doorPos.getY(), doorPos.getZ(), false);
+					.getSquaredDistance(doorPos.getX(), doorPos.getY(), doorPos.getZ());
 
 			if (d < dist) {
 				float f = radius + curVillage.getVillageRadius();
@@ -112,7 +111,7 @@ public class VillageCollection extends PersistentState {
 
 			BlockPos doorPos = door.getDoorBlockPos();
 			int d = (int) curVillage.getCenter()
-					.getSquaredDistance(doorPos.getX(), doorPos.getY(), doorPos.getZ(), false);
+					.getSquaredDistance(doorPos.getX(), doorPos.getY(), doorPos.getZ());
 			int f = radius + curVillage.getVillageRadius();
 
 			if (d <= f * f) {
@@ -137,6 +136,7 @@ public class VillageCollection extends PersistentState {
 
 	private void addNewDoorsToVillageOrCreateVillage() {
 		for (VillageDoorInfo door : this.newDoors) {
+			System.out.println("Adding door: " + door.getDoorBlockPos());
 			Village village;
 			if (isOakDoor(door.getDoorBlockPos())) {
 				village = getOldestVillage(door, 32);
@@ -148,6 +148,7 @@ public class VillageCollection extends PersistentState {
 				village = new Village(this.world);
 				this.villageList.add(village);
 				this.markDirty();
+				System.out.println("New village created. Total: " + villageList.size());
 			}
 
 			village.addVillageDoorInfo(door);
@@ -280,19 +281,28 @@ public class VillageCollection extends PersistentState {
 		return false;
 	}
 
+	public static String name() {
+		return OLD_VILLAGES;
+	}
+
 	/**
 	 * Read the data from NBT.
 	 */
-	public void fromTag(NbtCompound compound) {
-		this.tickCounter = compound.getInt("Tick");
+	public static VillageCollection fromNbt(NbtCompound compound) {
+		VillageCollection vc = new VillageCollection();
+
+		vc.tickCounter = compound.getInt("Tick");
 		NbtList nbtList = compound.getList("Villages", 10);
 
 		for (int i = 0; i < nbtList.size(); ++i) {
 			NbtCompound tag = nbtList.getCompound(i);
 			Village village = new Village();
 			village.readVillageDataFromNBT(tag);
-			this.villageList.add(village);
+			vc.villageList.add(village);
 		}
+
+		System.out.println("Loaded village collection from NBT");
+		return vc;
 	}
 
 	/**

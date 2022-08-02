@@ -3,6 +3,7 @@ package net.fabricmc.bolu.old_villages.village;
 import com.google.common.collect.Lists;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LargeEntitySpawnHelper;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -12,6 +13,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionTypes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -43,12 +45,12 @@ public class Village {
 
 	public Village(ServerWorld worldIn) {
 		DimensionType dimension = worldIn.getDimension();
-		if (dimension.isUltrawarm()) {
-			this.dim = DimensionType.THE_NETHER_ID;
-		} else if (dimension.hasEnderDragonFight()) {
-			this.dim = DimensionType.THE_END_ID;
+		if (dimension.ultrawarm()) {
+			this.dim = DimensionTypes.THE_NETHER_ID;
+		} else if (!dimension.hasSkyLight()) {
+			this.dim = DimensionTypes.THE_END_ID;
 		} else {
-			this.dim = DimensionType.OVERWORLD_ID;
+			this.dim = DimensionTypes.OVERWORLD_ID;
 		}
 	}
 
@@ -78,20 +80,10 @@ public class Village {
 				&& this.world.random.nextInt(7000) == 0) {
 			BlockPos spawnPos = this.findRandomSpawnPos(this.center);
 
-			IronGolemEntity ironGolem =
-					EntityType.IRON_GOLEM.create(this.world, null, null,
-							null,
-							spawnPos, SpawnReason.MOB_SUMMONED, false,
-							false);
-			if (ironGolem != null) {
-				if (ironGolem.canSpawn(this.world,
-						SpawnReason.MOB_SUMMONED) &&
-						ironGolem.canSpawn(this.world)) {
-					this.world.spawnEntityAndPassengers(ironGolem);
-					++this.numIronGolems;
-				} else {
-					ironGolem.remove();
-				}
+			if (LargeEntitySpawnHelper.trySpawnAt(EntityType.IRON_GOLEM, SpawnReason.MOB_SUMMONED,
+					this.world, spawnPos, 10, 8, 6, LargeEntitySpawnHelper.Requirements.IRON_GOLEM)
+					.isPresent()) {
+				++this.numIronGolems;
 			}
 		}
 	}
@@ -192,12 +184,12 @@ public class Village {
 	 */
 	public boolean isInSameDimension(ServerWorld worldIn) {
 		DimensionType dimension = worldIn.getDimension();
-		if (dimension.isUltrawarm()) {
-			return this.dim.equals(DimensionType.THE_NETHER_ID);
-		} else if (dimension.hasEnderDragonFight()) {
-			return this.dim.equals(DimensionType.THE_END_ID);
+		if (dimension.ultrawarm()) {
+			return this.dim.equals(DimensionTypes.THE_NETHER_ID);
+		} else if (!dimension.hasSkyLight()) {
+			return this.dim.equals(DimensionTypes.THE_END_ID);
 		}
-		return this.dim.equals(DimensionType.OVERWORLD_ID);
+		return this.dim.equals(DimensionTypes.OVERWORLD_ID);
 	}
 
 	/**
@@ -273,13 +265,13 @@ public class Village {
 		switch (compound.getInt("DIM")) {
 			default:
 			case 0:
-				this.dim = DimensionType.OVERWORLD_ID;
+				this.dim = DimensionTypes.OVERWORLD_ID;
 				break;
 			case -1:
-				this.dim = DimensionType.THE_NETHER_ID;
+				this.dim = DimensionTypes.THE_NETHER_ID;
 				break;
 			case 1:
-				this.dim = DimensionType.THE_END_ID;
+				this.dim = DimensionTypes.THE_END_ID;
 				break;
 		}
 
@@ -309,9 +301,9 @@ public class Village {
 		compound.putInt("ACX", this.doorCoordsSum.getX());
 		compound.putInt("ACY", this.doorCoordsSum.getY());
 		compound.putInt("ACZ", this.doorCoordsSum.getZ());
-		if (this.dim.equals(DimensionType.THE_NETHER_ID)) {
+		if (this.dim.equals(DimensionTypes.THE_NETHER_ID)) {
 			compound.putInt("DIM", -1);
-		} else if (this.dim.equals((DimensionType.THE_END_ID))) {
+		} else if (this.dim.equals((DimensionTypes.THE_END_ID))) {
 			compound.putInt("DIM", 1);
 		} else {
 			compound.putInt("DIM", 0);

@@ -4,6 +4,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionTypes;
 
 public class VillageDoorInfo {
 	/**
@@ -17,12 +18,12 @@ public class VillageDoorInfo {
 		this.doorBlockPos = pos;
 		this.lastActivityTimestamp = timestamp;
 		DimensionType dimension = worldIn.getDimension();
-		if (dimension.isUltrawarm()) {
-			this.dim = DimensionType.THE_NETHER_ID;
-		} else if (dimension.hasEnderDragonFight()) {
-			this.dim = DimensionType.THE_END_ID;
+		if (dimension.ultrawarm()) {
+			this.dim = DimensionTypes.THE_NETHER_ID;
+		} else if (!dimension.hasSkyLight()) {
+			this.dim = DimensionTypes.THE_END_ID;
 		} else {
-			this.dim = DimensionType.OVERWORLD_ID;
+			this.dim = DimensionTypes.OVERWORLD_ID;
 		}
 	}
 
@@ -60,11 +61,11 @@ public class VillageDoorInfo {
 	 */
 	public boolean isInSameDimension(ServerWorld worldIn) {
 		DimensionType dimension = worldIn.getDimension();
-		if (dimension.isUltrawarm()) {
-			return this.dim.equals(DimensionType.THE_NETHER_ID);
-		} else if (dimension.hasEnderDragonFight()) {
-			return this.dim.equals(DimensionType.THE_END_ID);
+		if (dimension.ultrawarm()) {
+			return this.dim.equals(DimensionTypes.THE_NETHER_ID);
+		} else if (!dimension.hasSkyLight()) {
+			return this.dim.equals(DimensionTypes.THE_END_ID);
 		}
-		return this.dim.equals(DimensionType.OVERWORLD_ID);
+		return this.dim.equals(DimensionTypes.OVERWORLD_ID);
 	}
 }

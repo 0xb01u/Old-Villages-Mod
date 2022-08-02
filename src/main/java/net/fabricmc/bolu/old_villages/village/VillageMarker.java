@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.dimension.DimensionTypes;
 
 import java.awt.Color;
 import java.util.*;
@@ -80,9 +81,10 @@ public class VillageMarker {
 				center = entry.getKey();
 				color = entry.getValue();
 
-				if ((center.dim == DimensionType.OVERWORLD_ID && dim.isBedWorking())
-						|| (center.dim == DimensionType.THE_NETHER_ID && dim.isUltrawarm())
-						|| (center.dim == DimensionType.THE_END_ID && dim.hasEnderDragonFight())) {
+				if ((center.dim == DimensionTypes.OVERWORLD_ID && dim.bedWorks())
+						|| (center.dim == DimensionTypes.THE_NETHER_ID && dim.ultrawarm())
+						|| (center.dim == DimensionTypes.THE_END_ID
+							&& (!dim.hasSkyLight() && !dim.piglinSafe()))) {
 
 					RenderUtils.drawBox(dx, dy, dz,
 							center.pos.getX() - 8, center.pos.getY() - 3,
@@ -102,9 +104,10 @@ public class VillageMarker {
 				int r = center.radius;
 				color = entry.getValue();
 
-				if ((center.dim == DimensionType.OVERWORLD_ID && dim.isBedWorking())
-						|| (center.dim == DimensionType.THE_NETHER_ID && dim.isUltrawarm())
-						|| (center.dim == DimensionType.THE_END_ID && dim.hasEnderDragonFight())) {
+				if ((center.dim == DimensionTypes.OVERWORLD_ID && dim.bedWorks())
+						|| (center.dim == DimensionTypes.THE_NETHER_ID && dim.ultrawarm())
+						|| (center.dim == DimensionTypes.THE_END_ID
+							&& (!dim.hasSkyLight() && !dim.piglinSafe()))) {
 
 					/* Population cage */ /* CURRENTLY UNUSED (bug in drawBox()) */
 					if (drawPopulationDetectVolume) {
@@ -138,9 +141,10 @@ public class VillageMarker {
 					color = doorInfo.color;
 
 					for (BlockPos door : doorInfo.doorPos) {
-						if ((center.dim == DimensionType.OVERWORLD_ID && dim.isBedWorking())
-								|| (center.dim == DimensionType.THE_NETHER_ID && dim.isUltrawarm())
-								|| (center.dim == DimensionType.THE_END_ID && dim.hasEnderDragonFight())) {
+						if ((center.dim == DimensionTypes.OVERWORLD_ID && dim.bedWorks())
+								|| (center.dim == DimensionTypes.THE_NETHER_ID && dim.ultrawarm())
+								|| (center.dim == DimensionTypes.THE_END_ID
+									&& (!dim.hasSkyLight() && !dim.piglinSafe()))) {
 
 							RenderUtils.drawLine(dx, dy, dz,
 									door.getX(), door.getY(), door.getZ(),

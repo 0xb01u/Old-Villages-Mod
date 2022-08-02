@@ -4,7 +4,8 @@ import net.fabricmc.bolu.old_villages.render.SphereDrawMode;
 import net.fabricmc.bolu.old_villages.village.VillageMarker;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.LiteralTextContent;
+import net.minecraft.text.MutableText;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,16 +24,16 @@ public abstract class KeyboardMixin {
 	public void processVillageMarker(int key, CallbackInfoReturnable<Boolean> cir) {
 		if (key == 86) {
 			if (!VillageMarker.drawDoorLines) {
-				this.client.inGameHud.getChatHud().addMessage(
-						new LiteralText("Debug village information: shown"));
+				this.client.inGameHud.getChatHud().addMessage(MutableText.of(
+						new LiteralTextContent("Debug village information: shown")));
 				VillageMarker.drawDoorLines = true;
 				VillageMarker.drawGolemSpawnVolume = true;
 				VillageMarker.drawPopulationDetectVolume = true;
 				VillageMarker.doorDetectSphereMode = SphereDrawMode.LINES;
 				cir.setReturnValue(true);
 			} else {
-				this.client.inGameHud.getChatHud().addMessage(
-						new LiteralText("Debug village information: hidden"));
+				this.client.inGameHud.getChatHud().addMessage(MutableText.of(
+						new LiteralTextContent("Debug village information: hidden")));
 				VillageMarker.drawDoorLines = false;
 				VillageMarker.drawGolemSpawnVolume = false;
 				VillageMarker.drawPopulationDetectVolume = false;
