@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "old_villages",
+  "version": "${version}",
+
+  "name": "Old Villages",
+  "description": "Bring back 1.2-1.7 and 1.8-1.13 village mechanics.",
+  "authors": [
+    "Bolu"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/old_villages/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.fabricmc.bolu.old_villages.OldVillagesMod"
+    ]
+  },
+  "mixins": [
+    "old_villages.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

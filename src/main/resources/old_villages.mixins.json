@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.fabricmc.bolu.old_villages.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ServerWorldMixin",
+    "VillagerEntityMixin"
+  ],
+  "client": [
+    "KeyboardMixin",
+    "WorldRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
