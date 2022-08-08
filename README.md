@@ -67,9 +67,8 @@ to how Minecraft has changed itself, some mechanics behave differently.
  - The conditions that allow Iron Golems to spawn have changed, so some old spawning platforms don't work as efficiently any more.
 
 Aside from that, some bugs have been noticed:
- - Villages might break when reloading (exiting and re-entering) a world. This should never happen in the current version of the mod, but be aware in case it does.
- - When reconstructing villages after reloading a world, some doors might be undetected until broken and placed again, or doors from the same village create multiple different villages. This also should never happen in the current version of the game, but be aware in case it does.
- - Concerning the Village Marker, the height (y coordinate) of the vertex of the door lines is not properly computed. It's not a big deal but it is noticeable.
+ - It has been noticed that, [when resetting old iron farms](#old-iron-farms-compatibility-list), sometimes and randomly, newly detected doors are added to an incorrect village. Whether this is caused by the mod itself (i.e. a hidden-from-plain-sight bug in the villager door detection code), lag spikes during the reset process, or any other change to Minecraft from a more recent version is yet to be identified.
+ - Concerning the Village Marker, the height (y coordinate) of the vertex of the door lines is not properly computed. It's not a big deal, but it is noticeable.
 
 ## Old iron farms compatibility list
 
