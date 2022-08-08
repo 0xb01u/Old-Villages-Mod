@@ -28,9 +28,9 @@ should feel missing.
 
 ## Differences between 1.2-1.7 and 1.8-1.13 village mechanics
 
-In 1.2-1.7 versions of Minecraft Java Edition, a valid village door would be added to the oldest
-village in range (or create a new village if no other village is in range.) In 1.8-1.13 versions,
-a valid village door would be added to the closest village in range (or create a new village).
+In 1.2-1.7 versions of Minecraft Java Edition, a valid village door would be added to the **oldest**
+village in range (or create a new village if no other village was in range). In 1.8-1.13 versions,
+a valid village door would be added to the **closest** village in range (or create a new village).
 
 ## Using 1.2-1.7 or 1.8-1.13 mechanics
 
@@ -38,7 +38,7 @@ To use 1.2-1.7 mechanics, just use Oak Doors as village doors. To use 1.8-1.13 m
 any other kind of wooden doors.
 
 The reasoning behind this feature is that Oak Doors were the only existing wooden doors in
-1.2-1.7, and I feel it is only appropriate to make them the key to those version's mechanics.
+1.2-1.7, and I feel it is only appropriate to make them the key to those versions' mechanics.
 
 ## Village Marker
 
@@ -84,10 +84,10 @@ thank you, Microsoft) as I plan on playing it with a friend. But I will not make
 Currently, the results of trying to rebuild old iron farms seem to be inconsistent. Sometimes full resets
 will work just fine, other times it will break halfway through. Here is a list of iron farms fully or
 partially tested:
- - [TDL's Project Fe 5](https://youtu.be/kHe6AS23AHw) (once broke after 64 villages, other after 80)
- - [TangoTek's Iron Trench](https://youtu.be/YFaCNsuD01k) (phase 1 only, phase 2 seems to add some upper doors to incorrect villages)
- - [DanielKotes 128-villages Lava Trench](https://youtu.be/j2WjrFoclKI) (phase 1 only)
- - [Bolu's Iron Farm (based on EDDxample's)](https://youtu.be/UtMBVGGpqZc) (two full reset finished properly, other resets didn't work)
+ - [TDL's Project Fe 5](https://youtu.be/kHe6AS23AHw): It sometimes breaks (adds doors incorrectly to previously setup villages) halfway through. It correctly built more than 512 villages (around 680), and the way it sometimes breaks is inconsistent. So **it _should_ work fine**. Maybe it breaks because of an unfortunately timed lag spike, or because over time certain chunks unload momentarily and their villages stop detecting the doors. In any case, it seems to be something out of the reach of this mod. In a powerful enough computer and making sure all the chunks containing the farm are properly loaded, it should be possible to reset it completely (up to the full 2049 villages). However, debugging the problem is quite a hard, time-consuming task, and I don't have the time for that. 
+ - [TangoTek's Iron Trench](https://youtu.be/YFaCNsuD01k): Phase 1 works fine. Phase 2 incorrectly adds upper doors to previously setup villages. This is probably because the uppermost villager responsible for detecting the upper village doors performs this detection before the lowermost villager does its (and thus the correct village is out of range for the upper doors). Whether this is a problem with the mod, a change performed to vanilla Minecraft after 1.7, or just a problem with the world download is yet unverified. 
+ - [DanielKotes 128-villages Lava Trench](https://youtu.be/j2WjrFoclKI): Phase 1 works fine. Phase 2 has not been tested yet.
+ - [Bolu's Iron Farm (based on EDDxample's)](https://youtu.be/UtMBVGGpqZc): Three full resets have finished correctly.
 
 Some other farms have been confirmed to not work unmodified:
  - [DanielKotes 128-villages Iron Trench](https://youtu.be/rX8JHL_Nu78) doesn't work because of changes in the way redstone components behave.
