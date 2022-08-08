@@ -67,16 +67,15 @@ to how Minecraft has changed itself, some mechanics behave differently.
  - The conditions that allow Iron Golems to spawn have changed, so some old spawning platforms don't work as efficiently any more.
 
 Aside from that, some bugs have been noticed:
- - Villages might break when reloading (exiting and re-entering) a world. This should never happen in the current version of the mod, but be aware in case it does.
- - When reconstructing villages after reloading a world, some doors might be undetected until broken and placed again, or doors from the same village create multiple different villages. This also should never happen in the current version of the game, but be aware in case it does.
- - Concerning the Village Marker, the height (y coordinate) of the vertex of the door lines is not properly computed. It's not a big deal but it is noticeable.
+ - It has been noticed that, [when resetting old iron farms](#old-iron-farms-compatibility-list), sometimes and randomly, newly detected doors are added to an incorrect village. Whether this is caused by the mod itself (i.e. a hidden-from-plain-sight bug in the villager door detection code), lag spikes during the reset process, or any other change to Minecraft from a more recent version is yet to be identified.
+ - Concerning the Village Marker, the height (y coordinate) of the vertex of the door lines is not properly computed. It's not a big deal, but it is noticeable.
 
 ## Why 1.16.5?
 
 I am aware that the latest Minecraft version at the time of first releasing this mod is 1.19.1.
 However, I am currently uninterested in playing Minecraft versions newer to The Nether Update, as I don't find them
 engaging or fun enough. I will probably update the mod to 1.19 (not 1.19.1, nobody should play that version,
-thank you, Microsoft) as I plan on playing it with a friend. But I will not make a version for 1.17-1.18 or above
+thank you, Microsoft) as I plan on playing it with a friend. But I will not make a version for 1.17-1.18, or above
 1.19, as I don't want to put effort into something I am not going to enjoy whatsoever.
 
 ## Old iron farms compatibility list
