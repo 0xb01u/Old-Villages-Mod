@@ -1,6 +1,6 @@
 # Old Village Mechanics Mod
 
-Minecraft 1.16.5 Java Edition fabric mod that brings back the old village mechanics related to iron
+Minecraft 1.19 Java Edition fabric mod that brings back the old village mechanics related to iron
 farming to the game.
 
 This mod brings back both the

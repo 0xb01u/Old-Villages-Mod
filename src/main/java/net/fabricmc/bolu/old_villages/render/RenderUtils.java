@@ -20,7 +20,6 @@ public class RenderUtils {
 			GlStateManager._disableCull();
 			GlStateManager._enableDepthTest();
 		} else {
-			GlStateManager._polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 			GlStateManager._enableCull();
 			GlStateManager._enableTexture();
 		}
@@ -32,7 +31,6 @@ public class RenderUtils {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 
-		GlStateManager._polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(Ax, Ay, Az).color(RED, GREEN, BLUE, 255).next();
 		BufferRenderer.drawWithShader(bufferBuilder.end());
@@ -47,7 +45,6 @@ public class RenderUtils {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 
-		GlStateManager._polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(Ax - dx, Ay - dy, Az - dz).color(RED, GREEN, BLUE, 255).next();
 		bufferBuilder.vertex(Bx - dx, By - dy, Bz - dz).color(RED, GREEN, BLUE, 255).next();

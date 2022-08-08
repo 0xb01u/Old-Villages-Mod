@@ -136,7 +136,6 @@ public class VillageCollection extends PersistentState {
 
 	private void addNewDoorsToVillageOrCreateVillage() {
 		for (VillageDoorInfo door : this.newDoors) {
-			System.out.println("Adding door: " + door.getDoorBlockPos());
 			Village village;
 			if (isOakDoor(door.getDoorBlockPos())) {
 				village = getOldestVillage(door, 32);
@@ -148,7 +147,6 @@ public class VillageCollection extends PersistentState {
 				village = new Village(this.world);
 				this.villageList.add(village);
 				this.markDirty();
-				System.out.println("New village created. Total: " + villageList.size());
 			}
 
 			village.addVillageDoorInfo(door);
@@ -301,7 +299,6 @@ public class VillageCollection extends PersistentState {
 			vc.villageList.add(village);
 		}
 
-		System.out.println("Loaded village collection from NBT");
 		return vc;
 	}
 
