@@ -83,7 +83,7 @@ partially tested:
 Some other farms have been confirmed to not work unmodified:
  - [DanielKotes 128-villages Iron Trench](https://youtu.be/rX8JHL_Nu78) doesn't work because of changes in the way redstone components behave.
 
-**Any help debugging the mod or verifying which old iron farms do or do not is very appreciated.** 
+**Any help debugging the mod or verifying which old iron farms do or do not work is very appreciated.** 
 
 # Credits
 
